@@ -1,12 +1,12 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
 
 use std::path::Path;
 
-use mermaid_rs_renderer::layout::{DiagramData, validate_layout_invariants};
-use mermaid_rs_renderer::{
+use mermaid_renderer::layout::{DiagramData, validate_layout_invariants};
+use mermaid_renderer::{
     Direction, Layout, LayoutConfig, Theme, compute_layout, parse_mermaid, render_svg,
 };
 
@@ -902,7 +902,7 @@ fn sequence_frames_keeps_mermaid_like_lane_pitch() {
 
 #[test]
 fn sequence_alt_frame_geometry_matches_mermaid() {
-    use mermaid_rs_renderer::layout::DiagramData;
+    use mermaid_renderer::layout::DiagramData;
 
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("tests")

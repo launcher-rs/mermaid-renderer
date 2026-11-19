@@ -6,89 +6,80 @@
 #![allow(clippy::question_mark)]
 #![allow(clippy::if_same_then_else)]
 
-//! # mmdr - Fast Mermaid Diagram Renderer
+//! # mermaid-renderer
 //!
-//! A pure Rust implementation of Mermaid diagram rendering, providing 100-600x
-//! faster rendering than mermaid-cli by eliminating browser dependencies.
+//! 纯 Rust 实现的 Mermaid 图表渲染库，直接输出 SVG：不依赖浏览器与 Node.js，
+//! 比基于浏览器内核的 mermaid-cli 快几个数量级。
 //!
-//! ## Quick Start
+//! 本项目由 [mermaid-rs-renderer](https://github.com/1jehuang/mermaid-rs-renderer)
+//! 0.3.1（MIT）分叉而来，由 [拾墨（Rumark）](https://github.com/launcher-rs/rumark)
+//! 项目维护；相对上游的改动见仓库 `README.md`。
+//!
+//! ## 快速开始
 //!
 //! ```rust
-//! use mermaid_rs_renderer::{render, render_with_options, RenderOptions};
+//! use mermaid_renderer::{render, render_with_options, RenderOptions};
 //!
 //! let diagram = r#"
 //! flowchart LR
-//!     A[Start] --> B{Decision}
-//!     B -->|Yes| C[OK]
-//!     B -->|No| D[Cancel]
+//!     A[开始] --> B{判断}
+//!     B -->|是| C[通过]
+//!     B -->|否| D[拒绝]
 //! "#;
 //!
-//! // Simple one-liner
+//! // 一行式渲染
 //! let svg = render(diagram).unwrap();
 //!
-//! // With options
+//! // 指定主题与布局参数
 //! let svg = render_with_options(diagram, RenderOptions::default()).unwrap();
 //! ```
 //!
-//! ## Pipeline Control
+//! ## 分阶段调用
 //!
-//! For more control over the rendering pipeline, use the individual stages:
+//! 需要复用解析结果或布局结果时，可以单独调用各阶段：
 //!
 //! ```rust
-//! use mermaid_rs_renderer::{parse_mermaid, compute_layout, render_svg};
-//! use mermaid_rs_renderer::{Theme, LayoutConfig};
+//! use mermaid_renderer::{compute_layout, parse_mermaid, render_svg};
+//! use mermaid_renderer::{LayoutConfig, Theme};
 //!
 //! let diagram = "flowchart LR; A-->B-->C";
 //!
-//! // Stage 1: Parse
+//! // 阶段一：解析
 //! let parsed = parse_mermaid(diagram).unwrap();
 //!
-//! // Stage 2: Layout
+//! // 阶段二：布局
 //! let theme = Theme::modern();
 //! let config = LayoutConfig::default();
 //! let layout = compute_layout(&parsed.graph, &theme, &config);
 //!
-//! // Stage 3: Render
+//! // 阶段三：渲染
 //! let svg = render_svg(&layout, &theme, &config);
 //! ```
 //!
-//! ## Supported Diagram Types
+//! ## 支持的图表类型
 //!
-//! - **Flowcharts** (`flowchart` / `graph`): TD, TB, LR, RL, BT directions
-//! - **Sequence Diagrams** (`sequenceDiagram`)
-//! - **Class Diagrams** (`classDiagram`)
-//! - **State Diagrams** (`stateDiagram-v2`)
-//! - **ER Diagrams** (`erDiagram`)
-//! - **Pie Charts** (`pie`)
-//! - **XY Charts** (`xychart`)
-//! - **Quadrant Charts** (`quadrantChart`)
-//! - **Gantt** (`gantt`)
-//! - **Timeline** (`timeline`)
-//! - **Journey** (`journey`)
-//! - **Mindmap** (`mindmap`)
-//! - **Git Graph** (`gitGraph`)
+//! - **流程图**（`flowchart` / `graph`）：TD、TB、LR、RL、BT 方向
+//! - **时序图**（`sequenceDiagram`）
+//! - **类图**（`classDiagram`）
+//! - **状态图**（`stateDiagram-v2`）
+//! - **ER 图**（`erDiagram`）
+//! - **饼图**（`pie`）
+//! - **XY 图**（`xychart`）
+//! - **象限图**（`quadrantChart`）
+//! - **甘特图**（`gantt`）
+//! - **时间线**（`timeline`）
+//! - **旅程图**（`journey`）
+//! - **思维导图**（`mindmap`）
+//! - **Git 图**（`gitGraph`）
 //!
-//! ## Features
+//! ## 特性
 //!
-//! - Pure Rust, no browser or Node.js required
-//! - ~3ms cold start vs ~2500ms for mermaid-cli
-//! - ~15MB memory vs ~300MB for mermaid-cli
-//! - SVG and PNG output (PNG via resvg)
-//! - Customizable themes and layout configuration
-//!
-//! ## Cargo Features
-//!
-//! - **`cli`** (default) - CLI binary support. Disable for library-only usage.
-//! - **`png`** (default) - PNG output via resvg. Disable for SVG-only usage.
-//!
-//! For minimal dependencies (e.g., embedding in other tools like Zola):
-//!
-//! ```toml
-//! [dependencies]
-//! mermaid-rs-renderer = { version = "0.2.2", default-features = false }
-//! ```
+//! - 纯 Rust，无需浏览器或 Node.js
+//! - 冷启动约 3ms（mermaid-cli 约 2500ms），内存约 15MB（mermaid-cli 约 300MB）
+//! - 输出 SVG，支持自定义主题与布局参数
+//! - 没有可选 feature，依赖图保持精简
 
-// rumark: 裁掉上游 cli 模块与 png 输出（连同 clap/resvg/usvg 依赖），只保留 lib 渲染 SVG。
+// fork: 裁掉上游 cli 模块与 png 输出（连同 clap/resvg/usvg 依赖），只保留 lib 渲染 SVG。
 pub mod config;
 mod edge_geometry;
 pub mod error;
@@ -190,7 +181,7 @@ impl RenderOptions {
 /// # Example
 ///
 /// ```rust
-/// use mermaid_rs_renderer::render;
+/// use mermaid_renderer::render;
 ///
 /// let svg = render("flowchart LR; A-->B-->C").unwrap();
 /// assert!(svg.contains("<svg"));
@@ -208,7 +199,7 @@ pub fn render(input: &str) -> anyhow::Result<String> {
 /// # Example
 ///
 /// ```rust
-/// use mermaid_rs_renderer::{render_with_options, RenderOptions};
+/// use mermaid_renderer::{render_with_options, RenderOptions};
 ///
 /// let opts = RenderOptions::mermaid_default()
 ///     .with_node_spacing(60.0)
@@ -333,7 +324,7 @@ impl RenderDetailedResult {
 /// # Example
 ///
 /// ```rust
-/// use mermaid_rs_renderer::{render_with_timing, RenderOptions};
+/// use mermaid_renderer::{render_with_timing, RenderOptions};
 ///
 /// let result = render_with_timing("flowchart LR; A-->B", RenderOptions::default()).unwrap();
 /// println!("Rendered in {:.2}ms", result.total_ms());

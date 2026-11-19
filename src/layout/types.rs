@@ -108,7 +108,7 @@ pub struct SequenceNoteLayout {
     pub position: crate::ir::SequenceNotePosition,
     pub participants: Vec<String>,
     pub index: usize,
-    // rumark: 见 ir::SequenceNote.order 注释（帧归属消歧）。
+    // fork: 见 ir::SequenceNote.order 注释（帧归属消歧）。
     pub order: usize,
 }
 

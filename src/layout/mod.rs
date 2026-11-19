@@ -1993,7 +1993,7 @@ flowchart RL
             .find(|edge| edge.from == "E" && edge.to == "F")
             .expect("missing E->F edge");
 
-        // rumark: 文本度量依赖本机字体（fontdb 系统字体回退），节点宽度会随字体环境
+        // fork: 文本度量依赖本机字体（fontdb 系统字体回退），节点宽度会随字体环境
         // 出现一个网格单元（16px）级别的偏移，E->F 未必能坍缩成 2 点纯直线。
         // 这里放宽为「允许一次小折角」，仍锁住「基本垂直对齐、无多余绕行」的语义。
         let straight = edge.points.len() == 2 && (edge.points[0].0 - edge.points[1].0).abs() <= 1.0;

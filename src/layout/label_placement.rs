@@ -329,7 +329,7 @@ fn resolve_center_labels(
             // bidirectional graphs can produce overlapping reserved centers, and
             // the flowchart-specific de-overlap pass below needs freedom to move
             // them to nearby clear positions.
-            // rumark: 状态图的转移标签同样由走线阶段预置锚点。同一节点多条出边的
+            // fork: 状态图的转移标签同样由走线阶段预置锚点。同一节点多条出边的
             // 标签会在分叉点附近重叠，若视为固定位置则去重叠完全不生效，故与
             // flowchart 一致地允许后续 pass 微调。
             continue;
@@ -1345,7 +1345,7 @@ fn center_label_gap_limits(kind: DiagramKind) -> (f32, f32, f32) {
             FLOWCHART_OWN_EDGE_SOFT_MAX_GAP,
             FLOWCHART_OWN_EDGE_HARD_MAX_GAP,
         ),
-        // rumark: target 与上方 OWN_EDGE_GAP_TARGET_STATE 对齐，贴线候选不再被
+        // fork: target 与上方 OWN_EDGE_GAP_TARGET_STATE 对齐，贴线候选不再被
         // tighten 阶段的偏差惩罚推开。
         DiagramKind::State => (0.8, 4.8, STATE_OWN_EDGE_HARD_MAX_GAP),
         DiagramKind::Class => (1.6, 4.6, CLASS_OWN_EDGE_HARD_MAX_GAP),
@@ -3791,7 +3791,7 @@ const WEIGHT_OUTSIDE: f32 = 1.2;
 const OWN_EDGE_GAP_TARGET: f32 = 1.2;
 const OWN_EDGE_GAP_TARGET_FLOWCHART: f32 = 1.8;
 const OWN_EDGE_GAP_TARGET_CLASS: f32 = 0.35;
-// rumark: 状态图的转移标签与 class 图一致，采用「贴线」语义（mermaid.js 风格，
+// fork: 状态图的转移标签与 class 图一致，采用「贴线」语义（mermaid.js 风格，
 // SVG 标签自带背景矩形）。此前 target=1.2 且 under 惩罚过重，导致标签宁可
 // 彼此重叠也不肯沿自身边线挪动让位。
 const OWN_EDGE_GAP_TARGET_STATE: f32 = 0.8;

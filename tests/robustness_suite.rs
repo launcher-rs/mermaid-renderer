@@ -1,4 +1,4 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
@@ -6,12 +6,12 @@
 use std::panic::{self, AssertUnwindSafe};
 use std::path::{Path, PathBuf};
 
-use mermaid_rs_renderer::ir::{
+use mermaid_renderer::ir::{
     BlockDiagram, BlockNode, EdgeStyleOverride, NodeStyle, PieSlice, QuadrantPoint, XYSeries,
     XYSeriesKind,
 };
-use mermaid_rs_renderer::layout::validate_layout_invariants;
-use mermaid_rs_renderer::{
+use mermaid_renderer::layout::validate_layout_invariants;
+use mermaid_renderer::{
     DiagramKind, Direction, Edge, EdgeStyle, Graph, LayoutConfig, NodeShape, StateNote,
     StateNotePosition, Subgraph, Theme, compute_layout, render_svg,
 };
@@ -250,7 +250,7 @@ fn issue_37_offscreen_coordinates_from_huge_label_do_not_panic() {
     let big = "M".repeat(20_000);
     let src = format!("flowchart LR\n  A[{big}] --> B[End]\n  B --> A\n");
     let result = panic::catch_unwind(AssertUnwindSafe(|| {
-        mermaid_rs_renderer::render(&src).expect("diagram should parse")
+        mermaid_renderer::render(&src).expect("diagram should parse")
     }));
     let svg = result.expect("issue #37 repro: render panicked");
     assert!(svg.contains("<svg"));
@@ -275,7 +275,7 @@ fn issue_37_degenerate_flowcharts_do_not_panic() {
     ];
     for src in cases {
         let result = panic::catch_unwind(AssertUnwindSafe(|| {
-            mermaid_rs_renderer::render(src).expect("diagram should parse")
+            mermaid_renderer::render(src).expect("diagram should parse")
         }));
         let svg = result.unwrap_or_else(|_| panic!("render panicked for: {src}"));
         assert!(svg.contains("<svg"), "missing svg for: {src}");
@@ -295,7 +295,7 @@ fn issue_116_decision_nodes_render_without_panic() {
     ];
     for src in cases {
         let result = panic::catch_unwind(AssertUnwindSafe(|| {
-            mermaid_rs_renderer::render(src).expect("diagram should parse")
+            mermaid_renderer::render(src).expect("diagram should parse")
         }));
         let svg = result.unwrap_or_else(|_| panic!("render panicked for: {src}"));
         assert!(svg.contains("<svg"), "missing svg for: {src}");
@@ -339,7 +339,7 @@ fn render_never_panics_on_any_fixture() {
             continue;
         };
         let result = panic::catch_unwind(AssertUnwindSafe(|| {
-            let _ = mermaid_rs_renderer::render(&input);
+            let _ = mermaid_renderer::render(&input);
         }));
         if result.is_err() {
             panics.push(path.display().to_string());

@@ -78,7 +78,7 @@ pub struct SequenceNote {
     pub participants: Vec<String>,
     pub label: String,
     pub index: usize,
-    // rumark: 注释在语句流中的序号（与 SequenceFrame 的 open/close_order 对齐），
+    // fork: 注释在语句流中的序号（与 SequenceFrame 的 open/close_order 对齐），
     // 用于区分「写在帧关键字之前的注释」与「帧内第一条就是注释」——两者
     // edges.len() 相同，仅靠 index 无法区分归属。
     pub order: usize,
@@ -311,7 +311,7 @@ pub struct SequenceFrame {
     pub sections: Vec<SequenceFrameSection>,
     pub start_idx: usize,
     pub end_idx: usize,
-    // rumark: 帧关键字（open/else/end）在语句流中的序号，见 SequenceNote.order。
+    // fork: 帧关键字（open/else/end）在语句流中的序号，见 SequenceNote.order。
     pub open_order: usize,
     pub close_order: usize,
 }

@@ -749,7 +749,7 @@ fn flowchart_routing_performance_profile(
     // graphs. The tier makes the tradeoff explicit: exact search for small
     // diagrams, bounded fast scoring for dense medium diagrams, and linear caps
     // for very large diagrams so worst-case routing remains predictable.
-    // rumark: Exact（逐候选网格 A* 试路由）档的适用上限从上游的 64 条边收紧到
+    // fork: Exact（逐候选网格 A* 试路由）档的适用上限从上游的 64 条边收紧到
     // 24 条边——24~64 条边的中型图落在 Exact 档时端口分配 + 走线在 UI 线程上
     // 可达秒级（issue #84 卡顿来源之一），改走 Bounded 快速档（fast_route、
     // 无网格试路由）。小图仍保留 Exact 的质量。
@@ -2638,7 +2638,7 @@ pub(in crate::layout) fn build_routed_edges(ctx: RoutedEdgeBuildContext<'_>) -> 
                 || max_edge_label_chars >= FLOWCHART_EDGE_LABEL_WRAP_TRIGGER_CHARS);
         let preferred_label_plan = route_label_plans.get(*idx).and_then(|plan| plan.as_ref());
         let preferred_label_id = preferred_label_plan.map(|plan| plan.obstacle_id.as_str());
-        // rumark: 状态图的转移标签在走线之后才锚定到路径上（SVG 标签自带背景矩形，
+        // fork: 状态图的转移标签在走线之后才锚定到路径上（SVG 标签自带背景矩形，
         // 标签压线是正常样式）。此前自身标签作为硬障碍参与 cell_blocked，迫使 A*
         // 为直线边绕行出 S 形；改为不再阻断自身标签的走线（其他边的标签障碍仍以
         // 软惩罚参与候选评分），让直线候选胜出。
@@ -3042,7 +3042,7 @@ mod tests {
         );
     }
 
-    // rumark: 上游断言 40 条边的复合图走 Exact 档。Exact 档对 24~64 条边的图
+    // fork: 上游断言 40 条边的复合图走 Exact 档。Exact 档对 24~64 条边的图
     // 会产生秒级端口分配耗时（issue #84 卡顿来源），已把 Exact 上限收紧到
     // 24 条边：小复合图仍走 Exact，中型复合图走 Bounded 快速档。
     #[test]

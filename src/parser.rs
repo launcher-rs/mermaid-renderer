@@ -724,7 +724,7 @@ fn normalize_class_method_signature(entry: &str) -> String {
     if rest.is_empty() {
         return trimmed.to_string();
     }
-    // rumark: mermaid 的方法后缀标记——`$` 静态、`*` 抽象——属于签名本身，
+    // fork: mermaid 的方法后缀标记——`$` 静态、`*` 抽象——属于签名本身，
     // 不能当作返回类型用 ` : ` 连接（此前 `+保存(实体)$` 会被拆成
     // `+保存(实体) : $`）。
     if rest == "$" || rest == "*" {
@@ -4997,7 +4997,7 @@ fn parse_sequence_diagram(input: &str) -> Result<ParseOutput> {
     let mut open_frames: Vec<crate::ir::SequenceFrame> = Vec::new();
     let mut frames: Vec<crate::ir::SequenceFrame> = Vec::new();
     let mut open_boxes: Vec<crate::ir::SequenceBox> = Vec::new();
-    // rumark: 帧/注释语句的先后序号（见 SequenceNote.order 注释）。
+    // fork: 帧/注释语句的先后序号（见 SequenceNote.order 注释）。
     let mut boundary_order: usize = 0;
 
     for raw_line in lines {
@@ -5606,7 +5606,7 @@ fn split_on_ampersand(input: &str) -> Vec<&str> {
     parts
 }
 
-/// rumark: 把 `|标签|` 的内容替换为空格（保持字节位置），防止链式拆分时标签
+/// fork: 把 `|标签|` 的内容替换为空格（保持字节位置），防止链式拆分时标签
 /// 文本中的连字符等字符被 ARROW_TOKEN_RE 误识别为第二条箭头（如 `high-risk`）。
 /// 注意多字节字符必须按 `len_utf8()` 填充，与 mask_bracket_content 一致。
 fn mask_pipe_label_content(masked: &str) -> String {
@@ -5631,7 +5631,7 @@ fn mask_pipe_label_content(masked: &str) -> String {
 
 fn split_edge_chain(line: &str) -> Option<Vec<String>> {
     let masked = mask_bracket_content(line);
-    // rumark: 管道标签（`-->|文本|`）不再整体放弃链式拆分——下方已有把节点前缀
+    // fork: 管道标签（`-->|文本|`）不再整体放弃链式拆分——下方已有把节点前缀
     // `|标签|` 归还给前一条箭头的逻辑。此前含管道标签的链式行会退化为单边解析，
     // 行内第二条边的目标节点被整段当作第一条边的目标 id，节点标签也被吞掉
     // （如 `A -->|否| B[文本] -.-> C`）。空格间隔的标签形式仍无法用前缀归还
@@ -6890,7 +6890,7 @@ A["foo & bar"] & B --> C"#;
         assert!(lines[5].contains("getName"));
     }
 
-    // rumark: `$`/`*` 是方法签名后缀标记（静态/抽象），不应被当作返回类型
+    // fork: `$`/`*` 是方法签名后缀标记（静态/抽象），不应被当作返回类型
     // 用 ` : ` 连接。
     #[test]
     fn parse_class_method_static_and_abstract_suffixes() {
@@ -6949,7 +6949,7 @@ A["foo & bar"] & B --> C"#;
         assert!(customer.label.contains("string id"));
     }
 
-    // rumark: 含管道标签的链式边此前会退化为单边解析——第二条边的目标被整段
+    // fork: 含管道标签的链式边此前会退化为单边解析——第二条边的目标被整段
     // 当作第一条边的目标 id，节点标签也被吞掉（`A -->|否| B[文本] -.-> C`）。
     #[test]
     fn parse_chained_edges_with_pipe_labels() {

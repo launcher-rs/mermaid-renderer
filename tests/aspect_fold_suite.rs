@@ -1,4 +1,4 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
@@ -13,10 +13,10 @@
 
 use std::collections::BTreeMap;
 
-use mermaid_rs_renderer::config::LayoutConfig;
-use mermaid_rs_renderer::layout::{Layout, compute_layout, validate_layout_invariants};
-use mermaid_rs_renderer::parser::parse_mermaid;
-use mermaid_rs_renderer::theme::Theme;
+use mermaid_renderer::config::LayoutConfig;
+use mermaid_renderer::layout::{Layout, compute_layout, validate_layout_invariants};
+use mermaid_renderer::parser::parse_mermaid;
+use mermaid_renderer::theme::Theme;
 
 const CHAIN_LR: &str =
     "flowchart LR\n  A[Start] --> B[Parse] --> C[Layout] --> D[Route] --> E[Render] --> F[Done]\n";
@@ -53,7 +53,7 @@ fn node_aspect_ratio(layout: &Layout) -> f32 {
 }
 
 /// Distance from `point` to the boundary of the node's axis-aligned box.
-fn rect_boundary_distance(point: (f32, f32), node: &mermaid_rs_renderer::NodeLayout) -> f32 {
+fn rect_boundary_distance(point: (f32, f32), node: &mermaid_renderer::NodeLayout) -> f32 {
     let (px, py) = point;
     let (x0, y0, x1, y1) = (node.x, node.y, node.x + node.width, node.y + node.height);
     let inside = px >= x0 && px <= x1 && py >= y0 && py <= y1;

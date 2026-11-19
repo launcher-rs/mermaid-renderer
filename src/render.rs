@@ -611,7 +611,7 @@ pub fn render_svg_with_dimensions(
                 "<rect x=\"{:.2}\" y=\"{:.2}\" width=\"{:.2}\" height=\"{:.2}\" {fill_attr} stroke=\"{}\" stroke-width=\"1.2\"/>",
                 seq_box.x, seq_box.y, seq_box.width, seq_box.height, stroke
             ));
-            // rumark: box 标签延迟到参与者头部绘制之后再画（见下方），避免被
+            // fork: box 标签延迟到参与者头部绘制之后再画（见下方），避免被
             // 头部矩形遮挡（单参与者 box 的标签中心恰好落在头部矩形内）。
         }
     }
@@ -1017,7 +1017,7 @@ pub fn render_svg_with_dimensions(
             _ => 2.0,
         };
         for (edge_idx, edge) in layout.edges.iter().enumerate() {
-            // rumark: 状态图走线也是正交折线，与 flowchart 一样做轻微圆角，避免生硬直角。
+            // fork: 状态图走线也是正交折线，与 flowchart 一样做轻微圆角，避免生硬直角。
             let d = if matches!(
                 layout.kind,
                 crate::ir::DiagramKind::Flowchart | crate::ir::DiagramKind::State
@@ -1557,7 +1557,7 @@ pub fn render_svg_with_dimensions(
                 svg.push_str("</a>");
             }
         }
-        // rumark: box 标签在参与者头部之上绘制，保证单参与者 box 的标题可见
+        // fork: box 标签在参与者头部之上绘制，保证单参与者 box 的标题可见
         // （标签水平居中于 box 顶部）。
         if let Some(seq) = seq_data {
             for seq_box in &seq.boxes {

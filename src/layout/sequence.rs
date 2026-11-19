@@ -242,7 +242,7 @@ pub(super) fn compute_sequence_layout(
             if let Some(label) = &edge.end_label {
                 row_h = row_h.max(measure_sequence_text(label, theme, config).height);
             }
-            // rumark: 自消息的钩形箭头向下延伸 note_gap_x*1.4，行距必须给钩形留出
+            // fork: 自消息的钩形箭头向下延伸 note_gap_x*1.4，行距必须给钩形留出
             // 空间——否则紧随其后的分组分隔线（y = 上一行 y + font*0.9）会被钩形
             // 与标签穿过。
             if edge.from == edge.to {
@@ -444,7 +444,7 @@ pub(super) fn compute_sequence_layout(
             let mut min_y = first_y;
             let mut max_y = last_y;
             for note in &sequence_notes {
-                // rumark: 用语句序号判断归属——仅统计真正写在帧关键字之间的注释。
+                // fork: 用语句序号判断归属——仅统计真正写在帧关键字之间的注释。
                 // 此前按 index 判断，会把「写在 loop 之前、index 恰好等于帧起点」的
                 // 注释算进帧内，把框的上边界撑到注释处，吞掉前面的消息。
                 if note.order > frame.open_order && note.order < frame.close_order {
@@ -487,7 +487,7 @@ pub(super) fn compute_sequence_layout(
                     .copied()
                     .unwrap_or(first_y);
                 let mut divider_y = base_y + divider_offset;
-                // rumark: 分隔线前的消息若是自消息，其钩形箭头下探超过分隔线
+                // fork: 分隔线前的消息若是自消息，其钩形箭头下探超过分隔线
                 // 默认偏移，分隔线需下移让位，避免与钩形/标签交叠。
                 if prev_end > 0
                     && graph
@@ -598,7 +598,7 @@ pub(super) fn compute_sequence_layout(
             .map(|foot| foot.y + foot.height)
             .fold(lifeline_end, f32::max);
         for seq_box in &graph.sequence_boxes {
-            // rumark: 包围盒按参与者头部的完整矩形计算（含文字宽度），此前按生命线
+            // fork: 包围盒按参与者头部的完整矩形计算（含文字宽度），此前按生命线
             // 中心计算，box 矩形比参与者头部还窄，边框线贴着生命线穿过、标签被
             // 头部矩形盖住不可见。
             let mut min_left = f32::INFINITY;
@@ -654,7 +654,7 @@ pub(super) fn compute_sequence_layout(
         }
     };
     for (_, _, event) in events {
-        // rumark: activate/deactivate 写在第 index 条消息之前。activate 从第 index
+        // fork: activate/deactivate 写在第 index 条消息之前。activate 从第 index
         // 条消息的行开始（与 mermaid.js 一致）；deactivate 应止于前一条消息与第
         // index 条消息之间的行间隙——此前直接取第 index 条消息的行，激活条会多
         // 覆盖一条消息的行高。

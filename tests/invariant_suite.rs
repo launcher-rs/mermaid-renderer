@@ -1,4 +1,4 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
@@ -6,12 +6,12 @@
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
-use mermaid_rs_renderer::ir::{BlockDiagram, QuadrantPoint};
-use mermaid_rs_renderer::layout::{
+use mermaid_renderer::ir::{BlockDiagram, QuadrantPoint};
+use mermaid_renderer::layout::{
     DiagramData, EdgeLayout, Layout, QuadrantLayout, QuadrantPointLayout, TextBlock,
     flowchart_quality_metrics, validate_layout_invariants,
 };
-use mermaid_rs_renderer::{
+use mermaid_renderer::{
     DiagramKind, EdgeStyle, Graph, LayoutConfig, Theme, compute_layout, parse_mermaid, render_svg,
 };
 

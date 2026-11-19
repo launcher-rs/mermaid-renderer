@@ -1,4 +1,4 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
@@ -25,12 +25,12 @@ use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use mermaid_rs_renderer::config::LayoutConfig;
-use mermaid_rs_renderer::ir::{DiagramKind, Graph};
-use mermaid_rs_renderer::layout::compute_layout;
-use mermaid_rs_renderer::parser::parse_mermaid;
-use mermaid_rs_renderer::render::render_svg;
-use mermaid_rs_renderer::theme::Theme;
+use mermaid_renderer::config::LayoutConfig;
+use mermaid_renderer::ir::{DiagramKind, Graph};
+use mermaid_renderer::layout::compute_layout;
+use mermaid_renderer::parser::parse_mermaid;
+use mermaid_renderer::render::render_svg;
+use mermaid_renderer::theme::Theme;
 
 /// A single correctness finding for one fixture.
 #[derive(Debug, Clone)]

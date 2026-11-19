@@ -1,23 +1,25 @@
-# 本 crate 由 crates.io 的 mermaid-rs-renderer 0.3.1 vendor 进本仓自维护（MIT，见 LICENSE）。
-# 相对上游的裁剪与修改见本目录 README.md；升级上游时对照 CHANGELOG.md 逐项评估。
 [package]
-name = "mermaid-rs-renderer"
-version = "0.3.1"
+name = "mermaid-renderer"
+version = "0.4.0"
 edition = "2024"
-description = "Fast Mermaid diagram renderer in pure Rust (vendored, trimmed for rumark)"
+rust-version = "1.87"
+description = "Pure-Rust Mermaid diagram parser and SVG renderer — no browser, no Node.js"
 license = "MIT"
-repository = "https://github.com/1jehuang/mermaid-rs-renderer"
-autolib = false
-autobins = false
-autoexamples = false
-autotests = false
-autobenches = false
+repository = "https://github.com/launcher-rs/mermaid-renderer"
+readme = "README.md"
+keywords = ["mermaid", "diagram", "svg", "flowchart", "renderer"]
+categories = ["visualization", "text-processing"]
+
+# 本 crate 由 crates.io 的 mermaid-rs-renderer 0.3.1 分叉（MIT，见 LICENSE 与 README 的出处说明）。
+# 上游的 cli / png feature 与 mmdr CLI 已裁掉，本 crate 只提供库形式的 SVG 渲染。
+
+[package.metadata.docs.rs]
+all-features = true
 
 [lib]
-name = "mermaid_rs_renderer"
+name = "mermaid_renderer"
 path = "src/lib.rs"
 
-# 上游的 cli/png feature（clap、resvg、usvg）已随 mmdr CLI 一并裁掉，rumark 只用 lib 渲染 SVG。
 [features]
 default = []
 

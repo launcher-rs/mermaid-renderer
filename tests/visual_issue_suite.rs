@@ -1,19 +1,13 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
 
-use mermaid_rs_renderer::{
+use mermaid_renderer::{
     DiagramKind, LayoutConfig, NodeShape, Theme, compute_layout, parse_mermaid, render_svg,
 };
 
-fn render(
-    input: &str,
-) -> (
-    mermaid_rs_renderer::Graph,
-    mermaid_rs_renderer::Layout,
-    String,
-) {
+fn render(input: &str) -> (mermaid_renderer::Graph, mermaid_renderer::Layout, String) {
     let parsed = parse_mermaid(input).expect("diagram should parse");
     let theme = Theme::modern();
     let config = LayoutConfig::default();
@@ -156,7 +150,7 @@ fn pie_slices_get_distinct_colors_with_default_theme() {
     for theme in [Theme::mermaid_default(), Theme::modern()] {
         let config = LayoutConfig::default();
         let layout = compute_layout(&parsed.graph, &theme, &config);
-        let mermaid_rs_renderer::layout::DiagramData::Pie(pie) = &layout.diagram else {
+        let mermaid_renderer::layout::DiagramData::Pie(pie) = &layout.diagram else {
             panic!("expected pie layout");
         };
         let colors: Vec<&str> = pie.slices.iter().map(|s| s.color.as_str()).collect();
@@ -225,7 +219,7 @@ fn pie_cjk_title_fits_inside_viewbox() {
     let theme = Theme::mermaid_default();
     let config = LayoutConfig::default();
     let layout = compute_layout(&parsed.graph, &theme, &config);
-    let mermaid_rs_renderer::layout::DiagramData::Pie(pie) = &layout.diagram else {
+    let mermaid_renderer::layout::DiagramData::Pie(pie) = &layout.diagram else {
         panic!("expected pie layout");
     };
     let title = pie.title.as_ref().expect("title should be laid out");
@@ -286,7 +280,7 @@ fn mindmap_edge_color_config_overrides_section_palette() {
     );
 }
 
-/// rumark: 状态图布局修复回归（三处修复：圆角分支、objective relax 排除 State、
+/// fork: 状态图布局修复回归（三处修复：圆角分支、objective relax 排除 State、
 /// 自身标签不再阻断走线）。带标签的转移应保持正交近直线走线，不得出现为绕开
 /// 自身标签而折叠出的 S 形。
 #[test]
@@ -333,7 +327,7 @@ fn state_diagram_labeled_transitions_route_as_straight_orthogonal_edges() {
     }
 }
 
-/// rumark: 状态图的折线拐点应做轻微圆滑（与 flowchart 一致），SVG path 中
+/// fork: 状态图的折线拐点应做轻微圆滑（与 flowchart 一致），SVG path 中
 /// 出现二次贝塞尔（Q）指令，而不是生硬的直角折线。
 #[test]
 fn state_diagram_edge_paths_use_rounded_corners() {

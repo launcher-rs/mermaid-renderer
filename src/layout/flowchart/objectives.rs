@@ -214,7 +214,7 @@ fn relax_edge_span_constraints(
     match graph.kind {
         DiagramKind::Class
         | DiagramKind::Flowchart
-        // rumark: 状态图的 transition 语义天然垂直分层，relax 会把同一 rank 的节点
+        // fork: 状态图的 transition 语义天然垂直分层，relax 会把同一 rank 的节点
         // 逐边不对称推移，造成 rank 错位与走线 zigzag，实测观感反而变差，故排除。
         | DiagramKind::Er
         | DiagramKind::Requirement => {}

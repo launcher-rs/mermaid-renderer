@@ -268,7 +268,7 @@ fn check_leading_arrow(lines: &[&str]) -> Result<(), ParseError> {
         if trimmed.is_empty() || trimmed.starts_with("%%") {
             continue;
         }
-        // rumark: 类图的 `<<interface>>` 等刻板注解行以 '<' 开头，会被下方
+        // fork: 类图的 `<<interface>>` 等刻板注解行以 '<' 开头，会被下方
         // starts_with_arrow 误判为行首箭头；mermaid 语法中不存在以 '<<' 开头的
         // 合法连线，这里直接放行。
         if trimmed.starts_with("<<") {
@@ -676,7 +676,7 @@ flowchart LR"#;
         ));
     }
 
-    // rumark: 类图刻板注解行以 '<<' 开头，不应触发行首箭头报错（此前
+    // fork: 类图刻板注解行以 '<<' 开头，不应触发行首箭头报错（此前
     // parse_mermaid_strict 会拒绝官方支持的 `<<interface>>` 语法）。
     #[test]
     fn class_stereotype_annotation_passes_strict() {

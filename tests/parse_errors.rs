@@ -1,4 +1,4 @@
-// rumark: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
+// fork: 与上游 lib.rs 的 lint 白名单一致（集成测试 crate 需单独声明）。
 #![allow(clippy::field_reassign_with_default)]
 #![allow(clippy::manual_range_contains)]
 #![allow(clippy::needless_range_loop)]
@@ -12,7 +12,7 @@
 //!
 //! Coverage: at least 5 cases per `ParseError` variant, 24 total.
 
-use mermaid_rs_renderer::{ParseError, RenderOptions, parse_mermaid_strict, render_strict};
+use mermaid_renderer::{ParseError, RenderOptions, parse_mermaid_strict, render_strict};
 
 // =====================================================================
 // InvalidDirective (5 cases)
