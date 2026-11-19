@@ -1,6 +1,6 @@
 [package]
 name = "mermaid-renderer"
-version = "0.4.0"
+version = "0.1.0"
 edition = "2024"
 rust-version = "1.87"
 description = "Pure-Rust Mermaid diagram parser and SVG renderer — no browser, no Node.js"

@@ -2,11 +2,11 @@
 
 纯 Rust 实现的 [Mermaid](https://mermaid.js.org/) 图表渲染库，直接输出 SVG：不启动浏览器，不需要 Node.js，解析、布局、文本度量与 SVG 生成全部在进程内完成。
 
-本项目由 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1（MIT）分叉而来，由 [拾墨（Rumark）](https://github.com/launcher-rs/rumark) 项目维护。尚未发布到 crates.io，请暂用 git 依赖：
+本项目由 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1（MIT）分叉而来，由 [拾墨（Rumark）](https://github.com/launcher-rs/rumark) 项目维护。尚未发布到 crates.io，也没有打稳定标签，请暂用 git 依赖（由 `Cargo.lock` 锁定具体提交）：
 
 ```toml
 [dependencies]
-mermaid-renderer = { git = "https://github.com/launcher-rs/mermaid-renderer", tag = "v0.4.0" }
+mermaid-renderer = { git = "https://github.com/launcher-rs/mermaid-renderer", branch = "main" }
 ```
 
 ## 快速开始

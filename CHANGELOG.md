@@ -3,9 +3,9 @@
 本仓自分叉起单独记录版本变化。分叉前的上游历史见
 [mermaid-rs-renderer CHANGELOG](https://github.com/1jehuang/mermaid-rs-renderer/blob/main/CHANGELOG.md)。
 
-## 0.4.0 (2026-11-19)
+## 0.1.0 (2026-11-19)
 
-以 `mermaid-renderer` 命名的首个版本，作为 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1 的分叉起点。相对上游属于破坏性变更：包名与库名均已修改。
+首个版本，作为 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1 的分叉起点。相对上游属于破坏性变更：包名与库名均已修改。尚未稳定，暂不打标签。
 
 ### 变更
 
