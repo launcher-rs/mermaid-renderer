@@ -11,9 +11,8 @@
 //! 纯 Rust 实现的 Mermaid 图表渲染库，直接输出 SVG：不依赖浏览器与 Node.js，
 //! 比基于浏览器内核的 mermaid-cli 快几个数量级。
 //!
-//! 本项目由 [mermaid-rs-renderer](https://github.com/1jehuang/mermaid-rs-renderer)
-//! 0.3.1（MIT）分叉而来，由 [拾墨（Rumark）](https://github.com/launcher-rs/rumark)
-//! 项目维护；相对上游的改动见仓库 `README.md`。
+//! 本项目分叉自 [mermaid-rs-renderer](https://github.com/1jehuang/mermaid-rs-renderer)
+//! 0.3.1（MIT）；相对上游的改动见仓库 `README.md`。
 //!
 //! ## 快速开始
 //!

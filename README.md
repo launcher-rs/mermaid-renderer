@@ -2,7 +2,9 @@
 
 纯 Rust 实现的 [Mermaid](https://mermaid.js.org/) 图表渲染库，直接输出 SVG：不启动浏览器，不需要 Node.js，解析、布局、文本度量与 SVG 生成全部在进程内完成。
 
-本项目由 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1（MIT）分叉而来，由 [拾墨（Rumark）](https://github.com/launcher-rs/rumark) 项目维护。尚未发布到 crates.io，也没有打稳定标签，请暂用 git 依赖（由 `Cargo.lock` 锁定具体提交）：
+## 安装
+
+暂以 git 依赖引入（具体提交由 `Cargo.lock` 锁定）：
 
 ```toml
 [dependencies]
@@ -65,6 +67,6 @@ cargo test
 
 测试套件会用固定语料渲染并对布局与 SVG 形状做回归校验，改动布局代码后必须全绿；任何发布标签都要建立在全绿基线上。
 
-## 许可与出处
+## 许可
 
-MIT。上游原始版权声明保留在 [LICENSE](LICENSE) 中；分叉起点的上游变更历史见 [CHANGELOG.md](CHANGELOG.md)。
+MIT，原始版权声明见 [LICENSE](LICENSE)。本项目分叉自 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1。
