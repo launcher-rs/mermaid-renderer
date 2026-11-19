@@ -4,12 +4,12 @@
 
 ## 安装
 
-暂以 git 依赖引入（具体提交由 `Cargo.lock` 锁定）：
-
 ```toml
 [dependencies]
-mermaid-renderer = { git = "https://github.com/launcher-rs/mermaid-renderer", branch = "main" }
+mermaid-renderer = "0.1"
 ```
+
+或直接 `cargo add mermaid-renderer`。
 
 ## 快速开始
 

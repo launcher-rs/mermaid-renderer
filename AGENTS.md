@@ -36,8 +36,8 @@
 
 ## 发布
 
-- 目前**未发布**到 crates.io，也**尚未打稳定标签**；下游先用 git 依赖（`branch = "main"`，具体提交由 `Cargo.lock` 锁定）。
-- 发布流程：改 `Cargo.toml` 版本 → 在 `CHANGELOG.md` 补该版本段与日期 → 测试全绿 → 提交 → 打 `v<版本>` 标签 → 推送 → `cargo publish`。
+- 已发布 `0.1.0` 到 crates.io（发布命令需显式指定 `--registry crates-io`，本机 cargo 默认走 rsproxy 镜像）。
+- 发布流程：改 `Cargo.toml` 版本 → 在 `CHANGELOG.md` 补该版本段与日期 → 测试全绿 → 提交 → 打 `v<版本>` 标签 → 推送 → `cargo publish --registry crates-io`。
 - 双远端：GitHub（`launcher-rs/mermaid-renderer`）为主仓，Gitee 为镜像；`main` 与标签两边同步推送。
 
 ## 提交
