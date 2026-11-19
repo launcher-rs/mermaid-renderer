@@ -1,93 +1,25 @@
-# Changelog
+# 更新日志（CHANGELOG）
 
-## v0.3.0 (2026-07-02)
+本仓自分叉起单独记录版本变化。分叉前的上游历史见
+[mermaid-rs-renderer CHANGELOG](https://github.com/1jehuang/mermaid-rs-renderer/blob/main/CHANGELOG.md)。
 
-### Render Size Metadata API
-- Added `measure_svg_dimensions` / `render_svg_with_dimensions` and a `--size` CLI flag so embedders can get exact output dimensions before rasterizing.
-- CLI defaults to the diagram's natural dimensions (#83).
+## 0.4.0 (2026-11-19)
 
-### Subgraph Containment Overhaul
-- Sibling subgraph membership now matches mermaid-js (`flowDb.makeUniq`): a node belongs to the first subgraph that claims it, so referencing it in a later subgraph no longer forces boxes to overlap.
-- New routing pass detours edges around subgraph boxes that contain neither endpoint.
-- New placement pass evicts non-member nodes that visually land inside subgraph boxes.
-- Hard gate is now 215 GREEN / 0 RED across the corpus (was 9 RED fixtures with 25 intruding edges).
+以 `mermaid-renderer` 命名的首个版本，作为 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1 的分叉起点。相对上游属于破坏性变更：包名与库名均已修改。
 
-### Layout and Routing Fixes
-- Port-driven grid placement and port-aware routing for architecture-beta (#112, #59).
-- Capped crossing-avoidance detours in flowchart route selection (#79).
-- Hardened routing against empty candidate lists (#37).
-- Fixed flowchart edge zig-zag and orbit artifacts; kept back-edge outer lanes through port refinement.
-- Routed C4 connectors around intervening shapes.
-- Separated state pseudostate markers from overlapping states.
-- Fixed 'unexpected token end' for sequence frames and block-beta named groups (#102).
-- Fixed gantt task ids ending in a duration letter being misparsed.
+### 变更
 
-### Themes and Styling
-- Added dark/forest/neutral theme presets and `--theme` CLI flag (#73).
-- Fixed pie slice colors, legend overlap (#69), and CJK title clipping (#112).
-- Added `mindmap.edgeColor` config (#49).
+- 包名 `mermaid-rs-renderer` → `mermaid-renderer`，库名 `mermaid_rs_renderer` → `mermaid_renderer`。
+- 移除 `cli` / `png` feature 与 `mmdr` 可执行文件，连同 `clap`、`resvg`、`usvg` 依赖；本 crate 只输出 SVG。
+- 移除 criterion 基准，保留 `benches/fixtures` 与 `docs/comparison_sources` 作为测试套件的回归语料。
 
-### Quality Gates and Detection
-- Hard gate gained semantic containment predicates (foreign-node containment, member escape), label-overflow, and canvas-overflow detectors.
-- Layout dumps now expose edge label anchors/extents for external metric tooling.
-- Added determinism, invariant, semantic, and output-shape suites plus baseline ratcheting.
+### 修复
 
-### Packaging
-- Release builds use fat LTO (#13); arm64 release artifacts (#71); Nix flake (#99).
+- 状态图：边标签漂移、走线 S 形绕行、直角生硬，正交折线缺少圆角。
+- 时序图：`loop`/`alt` 等分组框误吞框外消息、激活条多覆盖一条消息、`box` 分组缺少边框标签、自消息钩形箭头与 `par`/`alt` 分隔线交叠。
+- 流程图：含管道标签的链式边（如 `A -->|否| B[文本] -.-> C`）第二条边目标与节点标签被吞。
+- 类图：严格解析拒绝官方 `<<interface>>` 等刻板注解；`$`（静态）与 `*`（抽象）成员后缀被误当成返回类型拆开。
 
-## v0.2.2 (2026-04-23)
+### 性能
 
-### Visual and Layout Fixes
-- Fixed sequence diagram `alt` frame geometry and prevented wide section labels from panicking layout.
-- Fixed compact flowchart label decorations.
-- Made dotted edges visually distinct from solid edges.
-- Fixed class diagram stereotypes being rendered as members.
-- Fixed class diagram arrowheads being hidden under node boxes.
-- Fixed state diagram description lines so titles are preserved and descriptions accumulate.
-- Fixed empty-subgraph layout panic by keeping graph-level and local subgraph indexes mapped correctly.
-
-### Rendering and Theme Fixes
-- Fixed invalid non-ASCII hex color values causing panics.
-- Preserved quoted font-family normalization for SVG text output.
-
-### Gantt
-- Added compact Gantt display mode via YAML frontmatter (`displayMode: compact`).
-
-### Dependencies and Release
-- Updated `anyhow`, `clap`, `criterion`, `regex`, and release action dependencies.
-- Added release workflow automation for Homebrew and AUR package updates.
-
-## v0.2.0 (2026-02-07)
-
-### Layout Engine Overhaul
-- Rewrote flowchart layout with improved routing, subgraph compaction, and tighter node spacing
-- Auto-place edge labels with collision-aware search grid
-- Added edge label relaxation for Flowchart, State, ER, and Requirement diagrams
-- Node overlap resolver now runs for all diagram types when overlaps are detected
-- Finer-grained label placement search for closer label-to-edge proximity
-
-### Visual Quality Improvements
-- Redesigned ER diagram tables with cleaner styling
-- Redesigned pie charts with improved label readability
-- Redesigned journey diagram layout
-- Improved state diagram composite labels and marker sizing
-- Improved gantt chart rendering: section bands, color coding, in-bar labels
-- Improved mindmap, class, and flowchart rendering polish
-- Compact subgraph sizing across diagram types
-
-### Parser Fixes
-- Parse `-- "text" -->` quoted edge label syntax (fixes #27)
-
-### Performance
-- Added font cache for text metrics — avoids redundant font lookups
-- Added `--fastText` option for approximate text width metrics
-
-### Benchmarking & Quality
-- Layout quality scoring vs mermaid-cli
-- 16 new stress fixtures for benchmarks
-- Expanded comparison examples across all diagram types
-- Sankey link path detection in quality checks
-
-## v0.1.3 (2026-02-02)
-
-Initial public release with 13 diagram types and 100-1400x performance vs mermaid-cli.
+- 收紧精确路由阈值后，24~64 条边的流程图首次渲染耗时从约 1.3 秒降到约 0.3 秒。
