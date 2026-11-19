@@ -23,7 +23,7 @@
 - 早期代码移植自 `mermaid-rs-renderer` 0.3.1（MIT）：因此源码里仍有英文注释，且以 `fork:` 前缀标注后续改动点，便于回溯。
 - **新增或修改的注释一律用中文**；`fork:` 注释必须是中文，并写清改动原因。
 - 不要无谓重排代码、重命名既有标识符或整体重排格式，避免产生与基线无关的巨型 diff。
-- 用户可见文档（`README.md`、`AGENTS.md`、`CHANGELOG.md`）用中文；`Cargo.toml` 的 `description`、`keywords` 等 crates.io 元数据保持英文。
+- 用户可见文档（`README.md`、`AGENTS.md`、`CHANGELOG.md`）与 `Cargo.toml` 的 `description` 用中文；`keywords`、`categories` 等检索用元数据保持英文。
 
 ## 硬约束
 
