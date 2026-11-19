@@ -12,7 +12,7 @@
 //! 比基于浏览器内核的 mermaid-cli 快几个数量级。
 //!
 //! 本项目分叉自 [mermaid-rs-renderer](https://github.com/1jehuang/mermaid-rs-renderer)
-//! 0.3.1（MIT）；相对上游的改动见仓库 `README.md`。
+//! 0.3.1（MIT）。
 //!
 //! ## 快速开始
 //!

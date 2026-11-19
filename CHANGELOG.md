@@ -1,17 +1,14 @@
 # 更新日志（CHANGELOG）
 
-本仓自分叉起单独记录版本变化。分叉前的上游历史见
-[mermaid-rs-renderer CHANGELOG](https://github.com/1jehuang/mermaid-rs-renderer/blob/main/CHANGELOG.md)。
-
 ## 0.1.0 (2026-11-19)
 
-首个版本，作为 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1 的分叉起点。相对上游属于破坏性变更：包名与库名均已修改。尚未稳定，暂不打标签。
+首个版本。
 
-### 变更
+### 新增
 
-- 包名 `mermaid-rs-renderer` → `mermaid-renderer`，库名 `mermaid_rs_renderer` → `mermaid_renderer`。
-- 移除 `cli` / `png` feature 与 `mmdr` 可执行文件，连同 `clap`、`resvg`、`usvg` 依赖；本 crate 只输出 SVG。
-- 移除 criterion 基准，保留 `benches/fixtures` 与 `docs/comparison_sources` 作为测试套件的回归语料。
+- 纯 Rust 渲染 Mermaid 图表，输出 SVG，不依赖浏览器与 Node.js。
+- 支持流程图、时序图、类图、状态图、ER 图、饼图、XY 图、象限图、甘特图、时间线、旅程图、思维导图、Git 图。
+- 解析、布局、渲染三个阶段可分别调用，便于复用中间结果。
 
 ### 修复
 
@@ -22,4 +19,4 @@
 
 ### 性能
 
-- 收紧精确路由阈值后，24~64 条边的流程图首次渲染耗时从约 1.3 秒降到约 0.3 秒。
+- 24~64 条边的流程图首次渲染耗时约 0.3 秒。

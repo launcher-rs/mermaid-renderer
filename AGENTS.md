@@ -1,6 +1,6 @@
 # AGENTS.md — mermaid-renderer
 
-纯 Rust 的 Mermaid 图表渲染库（只输出 SVG），由上游 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1 分叉而来，独立自维护。
+纯 Rust 的 Mermaid 图表渲染库（只输出 SVG），解析、布局、文本度量与 SVG 生成全部在进程内完成。
 
 ## 构建 / 验证
 
@@ -18,12 +18,12 @@
 - `tests/`：十个 suite（正确性、确定性、布局不变量、形状、鲁棒性、解析错误等）
 - `tests/fixtures/`、`benches/fixtures/`、`docs/comparison_sources/`：回归语料；`tests/*baseline*.json`：硬门槛基线
 
-## 与上游的关系（重要）
+## 代码渊源（内部参考）
 
-- 本仓是**分叉**，不是重写：升级上游时对照上游 `CHANGELOG.md` 与源码中的 `fork:` 注释逐项移植。
-- 对上游代码的改动必须在改动点加 `fork:` 注释说明原因；不要无谓重排代码、重命名上游标识符或调整格式，避免与上游的 diff 膨胀到无法合并。
-- 上游遗留的英文注释保持原样；**新增或修改的注释一律用中文**，`fork:` 注释必须是中文。
-- 用户可见文档（`README.md`、`AGENTS.md`、`CHANGELOG.md` 中本项目自己的条目）用中文；`Cargo.toml` 的 `description`、`keywords` 等 crates.io 元数据保持英文。
+- 早期代码移植自 `mermaid-rs-renderer` 0.3.1（MIT）：因此源码里仍有英文注释，且以 `fork:` 前缀标注后续改动点，便于回溯。
+- **新增或修改的注释一律用中文**；`fork:` 注释必须是中文，并写清改动原因。
+- 不要无谓重排代码、重命名既有标识符或整体重排格式，避免产生与基线无关的巨型 diff。
+- 用户可见文档（`README.md`、`AGENTS.md`、`CHANGELOG.md`）用中文；`Cargo.toml` 的 `description`、`keywords` 等 crates.io 元数据保持英文。
 
 ## 硬约束
 

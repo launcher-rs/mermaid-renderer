@@ -46,16 +46,13 @@ let svg = render_svg(&layout, &theme, &config);
 
 流程图、时序图、类图、状态图（`stateDiagram-v2`）、ER 图、饼图、XY 图、象限图、甘特图、时间线、旅程图、思维导图、Git 图等，完整列表见 crate 文档。
 
-## 相对上游 0.3.1 的改动
+## 布局与渲染质量
 
-- 裁掉 `cli` / `png` feature 与 `mmdr` CLI（连同 `clap`、`resvg`、`usvg` 依赖），只保留输出 SVG 的库接口。
-- 裁掉 criterion 基准，但保留 `benches/fixtures` 与 `docs/comparison_sources`，它们是各测试套件的回归语料。
-- 在 0.3.1 基础上修复的布局问题（源码中以 `fork:` 注释标注）：
-  - 状态图：边标签漂移、走线 S 形绕行、直角生硬、正交折线缺少圆角；
-  - 时序图：`loop`/`alt` 等分组框误吞框外消息、激活条多覆盖一条消息、`box` 分组缺少边框标签、自消息钩形箭头与 `par`/`alt` 分隔线交叠；
-  - 流程图：含管道标签的链式边（如 `A -->|否| B[文本] -.-> C`）第二条边目标与节点标签被吞；
-  - 类图：严格解析拒绝官方 `<<interface>>` 等刻板注解，`$`/`*` 成员后缀被误当成返回类型拆开；
-  - 性能：收紧精确路由阈值后，24~64 条边的流程图首次渲染耗时从约 1.3 秒降到约 0.3 秒。
+- 状态图：边标签贴线显示，走线避免 S 形绕行与生硬直角，正交折线带圆角。
+- 时序图：分组框只包含框内消息，激活条覆盖范围准确，`box` 分组带边框标签，自消息钩形箭头不与 `par`/`alt` 分隔线交叠。
+- 流程图：含管道标签的链式边（如 `A -->|否| B[文本] -.-> C`）能正确归属第二条边的目标与标签。
+- 类图：支持 `<<interface>>` 等刻板注解，`$`（静态）与 `*`（抽象）成员后缀正常显示。
+- 性能：24~64 条边的流程图首次渲染耗时约 0.3 秒。
 
 ## 开发与验证
 
@@ -65,8 +62,8 @@ cargo clippy --all-targets
 cargo test
 ```
 
-测试套件会用固定语料渲染并对布局与 SVG 形状做回归校验，改动布局代码后必须全绿；任何发布标签都要建立在全绿基线上。
+测试套件会用固定语料渲染并对布局与 SVG 形状做回归校验，改动布局代码后必须全绿。
 
 ## 许可
 
-MIT，原始版权声明见 [LICENSE](LICENSE)。本项目分叉自 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1。
+MIT。本项目分叉自 [`mermaid-rs-renderer`](https://github.com/1jehuang/mermaid-rs-renderer) 0.3.1（MIT），原始版权声明见 [LICENSE](LICENSE)。
